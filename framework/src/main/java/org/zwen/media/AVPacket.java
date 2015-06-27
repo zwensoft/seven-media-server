@@ -161,7 +161,7 @@ public class AVPacket extends Buffer {
 		long duration = getDuration();
 		if (duration > 0){
 			long formatDur =  getDuration(AVTimeUnit.MILLISECONDS);;
-			buf.append(", duration=").append(duration).append("(").append(formatDur).append("ms)");
+			buf.append(", duration=").append("(").append(formatDur).append("ms) - ").append(duration);
 		}
 		
 		if (isDiscard()) {
