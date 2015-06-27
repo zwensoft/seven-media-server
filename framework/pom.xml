@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.zwen.media</groupId>
+		<artifactId>seven-media-server</artifactId>
+		<version>0.1</version>
+	</parent>
+	<artifactId>framework</artifactId>
+	<packaging>jar</packaging>
+	<version>0.1</version>
+	<name>framework</name>
+	<description>
+
+    </description>
+	<url>http://flazr.com</url>
+
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.zwen.media</groupId>
+			<artifactId>flazr</artifactId>
+			<version>0.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+
+		<!-- h264, mts -->
+		<dependency>
+			<groupId>org.jcodec</groupId>
+			<artifactId>jcodec</artifactId>
+			<version>0.1.9</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+
+		<plugins>
+			<!-- Compiler configuration -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<excludes>
+						<exclude>**/log4j.properties</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
