@@ -17,6 +17,8 @@ public abstract class AbstractDePacketizer {
 	private static final int MAX_BYTES_INSCREAMENT = 2048;
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	private AVPacket outBuffer;
+	private long position;
+	private long lastTimeStamp;
 	
 	private Map<Integer, List<byte[]>> caches = new ConcurrentHashMap<Integer, List<byte[]>>();
 	
@@ -31,9 +33,12 @@ public abstract class AbstractDePacketizer {
 			outBuffer.setTimeStamp(inBuffer.getTimeStamp());
 			outBuffer.setOffset(0);
 			outBuffer.setLength(0);
+			outBuffer.setPosition(position);
+			outBuffer.setDuration(inBuffer.getTimeStamp() - lastTimeStamp);
+			lastTimeStamp = inBuffer.getTimeStamp();
 		}
 	
-		
+		position += inBuffer.getLength();
 		int iret = doProcess(inBuffer, outBuffer);
 		
 		if (iret == PlugIn.BUFFER_PROCESSED_OK ) {
