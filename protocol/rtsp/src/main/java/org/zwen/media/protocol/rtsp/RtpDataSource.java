@@ -203,6 +203,9 @@ public class RtpDataSource implements RTPAppIntf {
 		try {
 			rtpSocket = new DatagramSocket(local.getDataPort());
 			rtcpSocket = new DatagramSocket(local.getControlPort());
+			rtpSocket.setReceiveBufferSize(1500 * 64);
+			rtcpSocket.setReceiveBufferSize(1024);
+			
 			rtpSession = new RTPSession(rtpSocket, rtcpSocket);
 			rtpSession.addParticipant(new Participant(remote.getDataAddress()
 					.getHostAddress(), remote.getDataPort(), remote
