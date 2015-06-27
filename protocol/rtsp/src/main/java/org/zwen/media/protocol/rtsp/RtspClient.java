@@ -358,6 +358,7 @@ public class RtspClient extends AVDispatcher implements Closeable {
 					receiver.setRtpTime(rtptime);
 					receiver.setSeq(seq);
 					receiver.start();
+					logger.info("start {}", receiver.getControlUrl(base));
 				}
 			}
 		}
