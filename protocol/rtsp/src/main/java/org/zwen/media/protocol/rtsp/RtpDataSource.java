@@ -55,7 +55,7 @@ public class RtpDataSource implements RTPAppIntf {
 	// RTP-Info=url=rtsp://127.0.0.1:8554/trackID=0;seq=10268;rtptime=5875310,
 	// url=rtsp://127.0.0.1:8554/trackID=1;seq=15231;rtptime=23980860
 	private boolean started = false;
-	private long seq = AVStream.UNKNOWN;
+	private int seq = AVStream.UNKNOWN;
 	private long rtpTime = AVStream.UNKNOWN;
 	private AVDispatcher dispatcher;
 	private List<AVPacket> out = new ArrayList<AVPacket>();
@@ -116,7 +116,7 @@ public class RtpDataSource implements RTPAppIntf {
 		if ("audio".equals(media.getMediaType())) {
 			rtpBufferLength = 4;
 		} else if ("video".equals(media.getMediaType())) {
-			rtpBufferLength = 93; // 93 * 1400 = 128KB
+			rtpBufferLength = 11; // 11 * 1400 = 16KB
 		} else {
 			logger.warn("unknown media {}", media.getMediaType());
 			return;
@@ -207,6 +207,7 @@ public class RtpDataSource implements RTPAppIntf {
 			rtcpSocket.setReceiveBufferSize(1024);
 			
 			rtpSession = new RTPSession(rtpSocket, rtcpSocket);
+			rtpSession.RTPSessionRegister(this, null, null);
 			rtpSession.addParticipant(new Participant(remote.getDataAddress()
 					.getHostAddress(), remote.getDataPort(), remote
 					.getControlPort()));
@@ -240,7 +241,6 @@ public class RtpDataSource implements RTPAppIntf {
 					new InetSocketAddress(remote.getDataAddress(), remote
 							.getControlPort())));
 
-			rtpSession.RTPSessionRegister(this, null, null);
 			connected = true;
 			return true;
 		} catch (Exception e) {
@@ -327,15 +327,20 @@ public class RtpDataSource implements RTPAppIntf {
 	}
 
 	@Override
-	public int bufferSize(int payloadType) {
+	public int getBufferSize() {
 		return rtpBufferLength;
+	}
+	
+	@Override
+	public int getFirstSeqNumber() {
+		return this.seq;
 	}
 
 	public void setRtpTime(long rtptime) {
 		this.rtpTime = rtptime;
 	}
 
-	public void setSeq(long seq) {
+	public void setSeq(int seq) {
 		this.seq = seq;
 	}
 
