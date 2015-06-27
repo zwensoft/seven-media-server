@@ -10,6 +10,7 @@ public class AVPacket extends Buffer {
 	private int streamIndex;
 	private long compositionTime = 0;
 	private AVTimeUnit timeUnit;
+	private long position;
 
 	public AVPacket(AVStream av) {
 		this.setFormat(av.getFormat());
@@ -117,10 +118,13 @@ public class AVPacket extends Buffer {
 		return streamIndex;
 	}
 
+	public void setPosition(long position) {
+		this.position = position;
+	}
 	
-
-
-
+	public long getPosition() {
+		return position;
+	}
 	
 	@Override
 	public String toString() {
@@ -152,7 +156,7 @@ public class AVPacket extends Buffer {
 		buf.append("size=").append(getLength());
 
 		buf.append(", ");
-		buf.append("pos=").append(getSequenceNumber());
+		buf.append("pos=").append(position);
 		
 		long duration = getDuration();
 		if (duration > 0){
