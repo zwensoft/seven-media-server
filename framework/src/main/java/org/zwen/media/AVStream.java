@@ -7,25 +7,14 @@ import javax.media.format.AudioFormat;
 import javax.media.format.VideoFormat;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zwen.media.codec.audio.aac.AACExtra;
 import org.zwen.media.codec.video.h264.H264Extra;
 
 
 public class AVStream {
-	/** a group samples  mp3 always be 26ms, */
-	private static final int MP3_DIFF = 26 * 90;
-	/** experience value */
-	private static final int MIN_AUDIO_DIFF = 23 * 90;
-	/** 25 fps **/
-	private static final int MIN_VIDEO_DIFF = 40 * 90;
-	/** in MPEG TS, the diff is GT 700ms, Player must do sync */
-	private static final int MAX_ASYNC_DIFF = 300 * 90;
 
 	private static final Format FORMAT_UNKNOWN = new Format("UNKNOWN");
 
-	private static final Logger logger = LoggerFactory.getLogger(AVStream.class);
 	
 	public static final int UNKNOWN = -1;
 
@@ -39,10 +28,6 @@ public class AVStream {
 	private AVStreamExtra extra;
 	private int height = UNKNOWN;
 	private int width = UNKNOWN;
-	
-	protected long max_async_diff = MAX_ASYNC_DIFF;
-	
-	
 	
 	public void setSampleRate(int sampleRate) {
 		this.sampleRate = sampleRate;
