@@ -122,4 +122,9 @@ public class H264Extra implements AVStreamExtra {
         return height;
     }
 
+	public void selectSpsAndPps(ByteBuffer keyFrame) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
