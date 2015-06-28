@@ -18,7 +18,7 @@ public abstract class AbstractDePacketizer {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	private AVPacket outBuffer;
 	private long position;
-	private long lastTimeStamp;
+	private AVPacket lastPkt;
 	
 	private Map<Integer, List<byte[]>> caches = new ConcurrentHashMap<Integer, List<byte[]>>();
 	
@@ -34,8 +34,6 @@ public abstract class AbstractDePacketizer {
 			outBuffer.setOffset(0);
 			outBuffer.setLength(0);
 			outBuffer.setPosition(position);
-			outBuffer.setDuration(inBuffer.getTimeStamp() - lastTimeStamp);
-			lastTimeStamp = inBuffer.getTimeStamp();
 		}
 	
 		position += inBuffer.getLength();
@@ -43,7 +41,13 @@ public abstract class AbstractDePacketizer {
 		
 		if (iret == PlugIn.BUFFER_PROCESSED_OK ) {
 			if (!outBuffer.isDiscard()) {
-				out.add(outBuffer);
+				if (null != lastPkt) {
+					if (lastPkt.getDuration() == Buffer.TIME_UNKNOWN) {
+						lastPkt.setDuration(outBuffer.getTimeStamp() - lastPkt.getTimeStamp());
+					}
+					out.add(lastPkt);
+				}
+				lastPkt = outBuffer;
 			}
 			outBuffer = null;
 		}
