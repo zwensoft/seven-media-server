@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import javax.media.Buffer;
 
+import org.jcodec.codecs.h264.io.model.NALUnitType;
 import org.zwen.media.AVStream;
 import org.zwen.media.ByteBuffers;
 import org.zwen.media.codec.video.h264.H264Extra;
@@ -277,6 +278,25 @@ public class H264DePacketizer extends AbstractDePacketizer {
             break;
         }
         setRequestKeyFrame(requestKeyFrame);
+
+        // deal with sps and pps
+        if (BUFFER_PROCESSED_OK == ret && outBuffer.getLength() > 5) {
+        	byte[] data = (byte[])outBuffer.getData();
+        	int nalu = data[4] & 0xff;
+            int nb = nalu & 0x1f;
+
+            NALUnitType type = NALUnitType.fromValue(nb);
+            switch (type) {
+			case SPS:
+				extra.addSps(ByteBuffer.wrap(data, 4, outBuffer.getLength() - 4));
+				break;
+			case PPS:
+				extra.addPps(ByteBuffer.wrap(data, 4, outBuffer.getLength() - 4));
+				break;
+			default:
+				break;
+			}
+        }
 
         return ret;
     }
