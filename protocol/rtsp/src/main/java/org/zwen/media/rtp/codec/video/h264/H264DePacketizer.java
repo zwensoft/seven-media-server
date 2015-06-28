@@ -18,6 +18,7 @@ import org.zwen.media.codec.video.h264.H264Extra;
 import org.zwen.media.rtp.codec.AbstractDePacketizer;
 
 public class H264DePacketizer extends AbstractDePacketizer {
+	private AVStream av = null;
 	private H264Extra extra = new H264Extra();;
 
 
@@ -124,6 +125,7 @@ public class H264DePacketizer extends AbstractDePacketizer {
 		}
 		
 		av.setExtra(extra);
+		this.av = av;
 	}
 
 
@@ -293,6 +295,11 @@ public class H264DePacketizer extends AbstractDePacketizer {
 			case PPS:
 				extra.addPps(ByteBuffer.wrap(data, 4, outBuffer.getLength() - 4));
 				break;
+			case IDR_SLICE:
+				// it's key frame, and select the real sps and pps for the stream
+				extra.selectSpsAndPps(ByteBuffer.wrap(data, 4, outBuffer.getLength() - 4));
+				this.av.setHeight(extra.getHeight());
+				this.av.setWidth(extra.getWidth());
 			default:
 				break;
 			}
