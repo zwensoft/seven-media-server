@@ -49,8 +49,8 @@ public class Mpeg4GenericCodec extends RtpDePacketizer {
 	}
 
 
-@Override
-public void init(AVStream av, String fmtpValue) {
+	@Override
+	protected void doInit(AVStream av, String fmtpValue) {
 		
 		// a=fmtp:96 streamtype=5; profile-level-id=15; mode=AAC-hbr;
 		// config=139056e5a54800; SizeLength=13; IndexLength=3;

@@ -97,11 +97,8 @@ public class H264DePacketizer extends RtpDePacketizer {
      */
     private Thread requestKeyFrameThread;
     
-    /* (non-Javadoc)
-     * @see org.zwen.media.rtp.codec.AbstractDePacketizer#init(org.zwen.media.AVStream, java.lang.String)
-     */
-    @Override
-    public void init(AVStream av, String fmtpValue) {
+	@Override
+	protected void doInit(AVStream av, String fmtpValue) {
 		Matcher matcher;
 
 		// packetization-mode=1;profile-level-id=4D001F;sprop-parameter-sets=Z00AH9oBQBbpUgAAAwACAAADAGTAgAC7fgAD9H973wvCIRqA,aM48gA==

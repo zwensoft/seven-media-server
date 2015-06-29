@@ -18,16 +18,19 @@ public abstract class RtpDePacketizer {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	private AVPacket outBuffer;
 	private long position;
-	private AVPacket lastPkt;
+	private AVStream av;
 	
 	private Map<Integer, List<byte[]>> caches = new ConcurrentHashMap<Integer, List<byte[]>>();
 	
 
-	public void init(AVStream av, String fmtpValue) {
-		
+	final public void init(AVStream av, String fmtpValue) {
+		this.av = av;
+		doInit(av, fmtpValue);
 	}
 	
-	final public void depacket(AVStream av, Buffer inBuffer, List<AVPacket> out) {
+	protected void doInit(AVStream av, String fmtpValue) {}
+	
+	final public void dePacket(AVStream av, Buffer inBuffer, List<AVPacket> out) {
 		if (null == outBuffer) {
 			outBuffer = new AVPacket(av);
 			outBuffer.setTimeStamp(inBuffer.getTimeStamp());
@@ -41,13 +44,14 @@ public abstract class RtpDePacketizer {
 		
 		if (iret == PlugIn.BUFFER_PROCESSED_OK ) {
 			if (!outBuffer.isDiscard()) {
+				AVPacket lastPkt = av.getLastPkt();
 				if (null != lastPkt) {
 					if (lastPkt.getDuration() == Buffer.TIME_UNKNOWN) {
 						lastPkt.setDuration(outBuffer.getTimeStamp() - lastPkt.getTimeStamp());
 					}
 					out.add(lastPkt);
 				}
-				lastPkt = outBuffer;
+				av.setLastPkt(outBuffer);
 			}
 			outBuffer = null;
 		}

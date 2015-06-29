@@ -319,7 +319,7 @@ public class RtpDataSource implements RTPAppIntf {
 			inBuffer.setTimeStamp(frame.getTimeStamp() - rtpTime);
 		}
 		
-		this.dePacketizer.depacket(av, inBuffer, out);
+		this.dePacketizer.dePacket(av, inBuffer, out);
 		while(!out.isEmpty()) {
 			AVPacket pkt = out.remove(0);
 			dispatcher.firePacket(av, pkt);
