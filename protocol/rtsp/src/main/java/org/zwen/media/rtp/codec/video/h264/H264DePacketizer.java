@@ -15,9 +15,9 @@ import org.jcodec.codecs.h264.io.model.NALUnitType;
 import org.zwen.media.AVStream;
 import org.zwen.media.ByteBuffers;
 import org.zwen.media.codec.video.h264.H264Extra;
-import org.zwen.media.rtp.codec.AbstractDePacketizer;
+import org.zwen.media.rtp.codec.RtpDePacketizer;
 
-public class H264DePacketizer extends AbstractDePacketizer {
+public class H264DePacketizer extends RtpDePacketizer {
 	private AVStream av = null;
 	private H264Extra extra = new H264Extra();;
 

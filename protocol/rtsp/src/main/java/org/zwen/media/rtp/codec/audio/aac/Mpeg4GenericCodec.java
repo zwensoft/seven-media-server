@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.zwen.media.AVStream;
 import org.zwen.media.ByteBuffers;
 import org.zwen.media.codec.audio.aac.AACExtra;
-import org.zwen.media.rtp.codec.AbstractDePacketizer;
+import org.zwen.media.rtp.codec.RtpDePacketizer;
 
 /**
  * 
@@ -22,7 +22,7 @@ import org.zwen.media.rtp.codec.AbstractDePacketizer;
  * 
  * @author chenxiuheng@gmail.com
  */
-public class Mpeg4GenericCodec extends AbstractDePacketizer {
+public class Mpeg4GenericCodec extends RtpDePacketizer {
 	private static final Logger logger = LoggerFactory
 			.getLogger(Mpeg4GenericCodec.class);
 

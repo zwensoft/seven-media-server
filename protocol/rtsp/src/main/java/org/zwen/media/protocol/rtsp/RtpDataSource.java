@@ -30,7 +30,7 @@ import org.zwen.media.AVPacket;
 import org.zwen.media.AVStream;
 import org.zwen.media.AVTimeUnit;
 import org.zwen.media.URLUtils;
-import org.zwen.media.rtp.codec.AbstractDePacketizer;
+import org.zwen.media.rtp.codec.RtpDePacketizer;
 import org.zwen.media.rtp.codec.audio.aac.Mpeg4GenericCodec;
 import org.zwen.media.rtp.codec.video.h264.H264DePacketizer;
 
@@ -63,7 +63,7 @@ public class RtpDataSource implements RTPAppIntf {
 	// Range=npt=7.143000-
 	private long npt;
 
-	private AbstractDePacketizer dePacketizer;
+	private RtpDePacketizer dePacketizer;
 
 	public RtpDataSource(AVStream stream, MediaDescription md) {
 		this.av = stream;

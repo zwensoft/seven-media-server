@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.zwen.media.AVPacket;
 import org.zwen.media.AVStream;
 
-public abstract class AbstractDePacketizer {
+public abstract class RtpDePacketizer {
 	private static final int MAX_BYTES_INSCREAMENT = 2048;
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	private AVPacket outBuffer;
