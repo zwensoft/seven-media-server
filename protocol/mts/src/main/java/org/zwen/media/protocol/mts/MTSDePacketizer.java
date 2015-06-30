@@ -207,6 +207,7 @@ public class MTSDePacketizer {
 				continue;
 			}
 
+			src.position(src.position() - 1);
 			src.get(mtsValues);
 			
 			// decode

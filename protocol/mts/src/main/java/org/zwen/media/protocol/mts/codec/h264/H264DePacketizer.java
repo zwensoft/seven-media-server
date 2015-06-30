@@ -109,7 +109,7 @@ public class H264DePacketizer extends PESDePacketizer {
 		}
 
 		if (null != prePES && startWithNewNal(data.duplicate())) {
-			flush(av, out);
+			doFlush(av, out);
 		}
 
 		if (null != prePES) {
