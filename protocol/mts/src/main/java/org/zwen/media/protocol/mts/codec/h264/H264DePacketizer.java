@@ -46,18 +46,20 @@ public class H264DePacketizer extends PESDePacketizer {
 				case PPS:
 					pps = nal;
 					break;
+				case END_OF_SEQ:
+					doFlush(av, out);
+					break;
 				case END_OF_STREAM:
 					isEOM = true;
 					break;
 				case IDR_SLICE:
 					isKey = true;
-					break;
 				default:
+					raw.put(START_CODE);
+					raw.put(nal.duplicate());
 					break;
 				}
 
-				raw.put(START_CODE);
-				raw.put(nal.duplicate());
 			}
 			raw.flip();
 
@@ -67,7 +69,13 @@ public class H264DePacketizer extends PESDePacketizer {
 				compositeTime = prePES.pts - prePES.dts;
 			}
 
-			
+
+			// set sps+pps for avstream
+			if (null != sps && null != pps) {
+				extra.addPps(pps);
+				extra.addSps(sps);
+				av.setExtra(extra);
+			}
 			
 			AVPacket packet = new AVPacket(av);
 			packet.setEOM(isEOM);
@@ -76,23 +84,7 @@ public class H264DePacketizer extends PESDePacketizer {
 			packet.setTimeStamp(prePES.pts);
 			packet.setCompositionTime(compositeTime);
 			packet.setTimeUnit(AVTimeUnit.MILLISECONDS_90);
-			packet.setSequenceNumber(prePES.pos);
-
-			// set sps+pps for avstream
-			if (null != sps && null != pps) {
-				extra.addPps(pps);
-				extra.addSps(sps);
-				av.setExtra(extra);
-				
-				ByteBuffer buf = ByteBuffer.allocate(sps.limit() + pps.limit() + 2 * START_CODE.length);
-				
-				buf.put(START_CODE);
-				buf.put(sps);
-				buf.put(START_CODE);
-				buf.put(pps);
-				buf.flip();
-				packet.setExtra(buf);
-			}
+			packet.setPosition(prePES.pos);
 
 			out.add(packet);
 			prePES = null;

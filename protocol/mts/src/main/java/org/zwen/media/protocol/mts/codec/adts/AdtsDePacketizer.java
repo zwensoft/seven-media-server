@@ -122,7 +122,7 @@ public class AdtsDePacketizer extends PESDePacketizer {
 
 		packet.setDuration(duration);
 		packet.setTimeStamp(pts);
-		packet.setSequenceNumber(pos);
+		packet.setPosition(pos);
 		packet.setTimeUnit(AVTimeUnit.MILLISECONDS_90);
 
 		ByteBuffer data = ByteBuffer.allocate(end - from);

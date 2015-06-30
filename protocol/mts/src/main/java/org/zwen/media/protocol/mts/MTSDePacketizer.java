@@ -47,7 +47,7 @@ public class MTSDePacketizer {
 	private int numPesStreams = 0;
 
 	private boolean dispatchedAVStreams = false;
-	private int bufferLength = 50; // 0.5s for video which is 25fps
+	private int bufferLength = 5; // 0.2s for video which is 25fps
 	private TreeSet<AVPacket> buffers = new TreeSet<AVPacket>(COMPARATOR);
 
 
@@ -222,8 +222,8 @@ public class MTSDePacketizer {
 	private static final Comparator<? super AVPacket> COMPARATOR = new Comparator<AVPacket>() {
 		@Override
 		public int compare(AVPacket pkt1, AVPacket pkt2) {
-			long a = pkt1.getSequenceNumber();
-			long b = pkt2.getSequenceNumber();
+			long a = pkt1.getPosition();
+			long b = pkt2.getPosition();
 
 			long p1 = pkt1.getTimeStamp();
 			long p2 = pkt2.getTimeStamp();
