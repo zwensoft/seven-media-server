@@ -10,7 +10,7 @@ import org.jcodec.containers.mps.MPSDemuxer.PESPacket;
 import org.zwen.media.AVPacket;
 import org.zwen.media.AVStream;
 
-public abstract class PesDePacketizer {
+public abstract class PesDePacketizer2 {
 	private List<AVPacket> bufOut = new ArrayList<AVPacket>();
 
 	public final void dePacket(AVStream av, PESPacket pes,
