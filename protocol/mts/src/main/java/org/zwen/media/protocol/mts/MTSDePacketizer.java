@@ -21,7 +21,7 @@ import org.zwen.media.AVDispatcher;
 import org.zwen.media.AVPacket;
 import org.zwen.media.AVStream;
 import org.zwen.media.Constants;
-import org.zwen.media.protocol.mts.codec.PesDePacketizer;
+import org.zwen.media.protocol.mts.codec.PESDePacketizer;
 import org.zwen.media.protocol.mts.codec.adts.AdtsDePacketizer;
 import org.zwen.media.protocol.mts.codec.h264.H264DePacketizer;
 
@@ -109,7 +109,7 @@ public class MTSDePacketizer {
 							break;
 						}
 
-						PesDePacketizer  depacketizer = null;
+						PESDePacketizer  depacketizer = null;
 						switch (streamType) {
 						case AUDIO_AAC_ADTS:
 							depacketizer = adts;

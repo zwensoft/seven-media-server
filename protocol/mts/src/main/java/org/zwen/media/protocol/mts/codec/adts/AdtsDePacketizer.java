@@ -11,9 +11,9 @@ import org.zwen.media.AVPacket;
 import org.zwen.media.AVStream;
 import org.zwen.media.AVTimeUnit;
 import org.zwen.media.codec.audio.aac.AACExtra;
-import org.zwen.media.protocol.mts.codec.PesDePacketizer;
+import org.zwen.media.protocol.mts.codec.PESDePacketizer;
 
-public class AdtsDePacketizer extends PesDePacketizer {
+public class AdtsDePacketizer extends PESDePacketizer {
 
 	int id;
 	int layer;
