@@ -13,9 +13,9 @@ import org.zwen.media.AVPacket;
 import org.zwen.media.AVStream;
 import org.zwen.media.AVTimeUnit;
 import org.zwen.media.codec.video.h264.H264Extra;
-import org.zwen.media.protocol.mts.codec.MtsDePacketizer;
+import org.zwen.media.protocol.mts.codec.PesDePacketizer;
 
-public class H264DePacketizer extends MtsDePacketizer {
+public class H264DePacketizer extends PesDePacketizer {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(H264DePacketizer.class);
 	private static final byte[] START_CODE = new byte[] { 0, 0, 0, 1 };

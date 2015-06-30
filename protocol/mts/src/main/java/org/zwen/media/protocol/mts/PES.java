@@ -12,17 +12,17 @@ import org.jcodec.containers.mps.MPSUtils;
 import org.jcodec.containers.mps.MPSDemuxer.PESPacket;
 import org.zwen.media.AVPacket;
 import org.zwen.media.AVStream;
-import org.zwen.media.protocol.mts.codec.MtsDePacketizer;
+import org.zwen.media.protocol.mts.codec.PesDePacketizer;
 
 public class PES {
 	public int pid;
-	public MtsDePacketizer visitor;
+	public PesDePacketizer visitor;
 
 	public AVStream stream;
 	private PESPacket pes;
 	private ChannelBuffer buf = ChannelBuffers.EMPTY_BUFFER;
 
-	public PES(int pid, MtsDePacketizer visitor, AVStream stream) {
+	public PES(int pid, PesDePacketizer visitor, AVStream stream) {
 		this.pid = pid;
 		this.visitor = visitor;
 		this.stream = stream;
@@ -62,7 +62,7 @@ public class PES {
 		buf.writeBytes(seg);
 	}
 
-	public void visit(MtsDePacketizer visitor, Collection<AVPacket> out) {
+	public void visit(PesDePacketizer visitor, Collection<AVPacket> out) {
 		if (null != visitor && buf.readableBytes() > 0) {
 			ByteBuffer data = ByteBuffer.allocate(buf.readableBytes());
 			buf.readBytes(data);

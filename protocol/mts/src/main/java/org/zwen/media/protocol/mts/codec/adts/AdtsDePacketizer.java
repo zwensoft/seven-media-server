@@ -7,17 +7,13 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jcodec.common.io.BitReader;
 import org.jcodec.containers.mps.MPSDemuxer.PESPacket;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.zwen.media.AVPacket;
 import org.zwen.media.AVStream;
 import org.zwen.media.AVTimeUnit;
 import org.zwen.media.codec.audio.aac.AACExtra;
-import org.zwen.media.protocol.mts.codec.MtsDePacketizer;
+import org.zwen.media.protocol.mts.codec.PesDePacketizer;
 
-public class AdtsDePacketizer extends MtsDePacketizer {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(AdtsDePacketizer.class);
+public class AdtsDePacketizer extends PesDePacketizer {
 
 	int id;
 	int layer;
